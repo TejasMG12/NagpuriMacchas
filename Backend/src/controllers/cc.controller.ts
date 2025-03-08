@@ -6,20 +6,20 @@ import profileService from "../handlers/user/profile.service";
 export const defaultProfile = "Unknown"
 
 export const answer = async (req: Request, res: Response): Promise<void> => {
-    const { email, message } = req.body;
-    if (!email || !message) {
+    const { userId, message } = req.body;
+    if (!userId || !message) {
         res.status(400).json({ error: "User ID and message are required" });
         return;
     }
-    if (!userSessions[email]) {
-        userSessions[email] = model.startChat({
+    if (!userSessions[userId]) {
+        userSessions[userId] = model.startChat({
             history: [],
             generationConfig: queryConfig
             
         });
     }
     try {
-        const result = await userSessions[email].sendMessage(message);
+        const result = await userSessions[userId].sendMessage(message);
         const reply = result.response.text();
         res.json(JSON.parse(reply));
     } catch (error) {
@@ -29,17 +29,17 @@ export const answer = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const firsttime = async (req: Request, res: Response): Promise<void> => {
-    const { email, qtype } = req.body;
-    if (!email || !qtype) {
+    const { userId, qtype } = req.body;
+    if (!userId || !qtype) {
         res.status(400).json({ error: "Email ID and query type are required" });
         return;
     }
-    const userProfile = await profileService.getProfileByEmail(email);
+    const userProfile = await profileService.getProfileByEmail(userId);
     console.log(userProfile);
-    if (userSessions[email]) {
-        delete userSessions[email];
+    if (userSessions[userId]) {
+        delete userSessions[userId];
     }
-    userSessions[email] = model.startChat({
+    userSessions[userId] = model.startChat({
         history: [],
         generationConfig: queryConfig
     });
@@ -56,7 +56,7 @@ export const firsttime = async (req: Request, res: Response): Promise<void> => {
         message = `User Profile: ${userProfile || defaultProfile} \nUser wants to have a conversation about his/her health.`;
     }
     try {
-        const result = await userSessions[email].sendMessage(message);
+        const result = await userSessions[userId].sendMessage(message);
         const reply = result.response.text();
         res.json(JSON.parse(reply));
     } catch (error) {
