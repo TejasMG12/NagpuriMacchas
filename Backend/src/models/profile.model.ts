@@ -10,7 +10,6 @@ export interface IUserProfile extends Document {
     password: string;
     age: number;
     gender: "Male" | "Female" | "Other";
-    
     medicalHistory?: {
         allergies?: string[];
         chronicDiseases?: string[];
@@ -38,7 +37,7 @@ const UserProfileSchema = new Schema<IUserProfile>(
         password: { type: String, required: true },
         age: { type: Number, required: true },
         gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
-        
+
         medicalHistory: {
             allergies: [{ type: String }],
             chronicDiseases: [{ type: String }],
@@ -67,7 +66,7 @@ const UserProfileSchema = new Schema<IUserProfile>(
 
 UserProfileSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     // return await bcrypt.compare(candidatePassword, this.password);
-    console.log({candidatePassword,passwrod: this.password})
+    console.log({ candidatePassword, passwrod: this.password })
     return candidatePassword == this.password;
 };
 

@@ -5,7 +5,7 @@ class AuthController {
   async signUp(req: Request, res: Response) {
     try {
       const { name, email, password, age, gender } = req.body;
-      const { token, user } = await authService.signUp({ name, email, password, age, gender});
+      const { token, user } = await authService.signUp({ name, email, password, age, gender });
 
       res.status(201).json({ message: "Signup successful", token, user });
     } catch (error) {

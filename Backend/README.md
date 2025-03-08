@@ -19,6 +19,7 @@ This backend provides APIs for user authentication, profile management, and AI-b
   "name": "John Doe",
   "email": "john@example.com",
   "password": "securepassword",
+  "location": "Manewada, Nagpur",
   "age": 25,
   "gender": "Male"
 }
@@ -34,6 +35,7 @@ This backend provides APIs for user authentication, profile management, and AI-b
     "name": "Tejas gampawar",
     "email": "tejas@gmail.com",
     "password": "$2b$10$VwjuoBVkSekO3cJGE2eDlelRDFyOO4wlIvKy6iUyAeyG3Lsnv2.gG",
+    "location": "Manewada, Nagpur",
     "age": 12,
     "gender": "Male",
     "medicalHistory": {
@@ -83,6 +85,7 @@ This backend provides APIs for user authentication, profile management, and AI-b
     "password": "$2b$10$VwjuoBVkSekO3cJGE2eDlelRDFyOO4wlIvKy6iUyAeyG3Lsnv2.gG",
     "age": 12,
     "gender": "Male",
+    "location": "Manewada, Nagpur",
     "healthGoals": [],
     "createdAt": "2025-03-08T13:32:01.201Z",
     "updatedAt": "2025-03-08T13:32:01.201Z",
@@ -219,32 +222,24 @@ GET http://localhost:5000/profile/tejas@gmail.com
 
 ```json
 {
-    "message": "Profile updated",
-    "profile": {
-        "medicalHistory": {
-            "allergies": [
-                "asthama"
-            ],
-            "chronicDiseases": [
-                "xyz"
-            ],
-            "medications": [
-                "abc"
-            ]
-        },
-        "_id": "ce9bfdc0-7c9a-42ff-b3da-20e3b264bf19",
-        "name": "Tejas gampawar",
-        "email": "tejas@gmail.com",
-        "password": "$2b$10$VwjuoBVkSekO3cJGE2eDlelRDFyOO4wlIvKy6iUyAeyG3Lsnv2.gG",
-        "age": 12,
-        "gender": "Male",
-        "healthGoals": [
-            "Want to gain weight"
-        ],
-        "createdAt": "2025-03-08T13:32:01.201Z",
-        "updatedAt": "2025-03-08T13:33:00.664Z",
-        "__v": 0
-    }
+  "message": "Profile updated",
+  "profile": {
+    "medicalHistory": {
+      "allergies": ["asthama"],
+      "chronicDiseases": ["xyz"],
+      "medications": ["abc"]
+    },
+    "_id": "ce9bfdc0-7c9a-42ff-b3da-20e3b264bf19",
+    "name": "Tejas gampawar",
+    "email": "tejas@gmail.com",
+    "password": "$2b$10$VwjuoBVkSekO3cJGE2eDlelRDFyOO4wlIvKy6iUyAeyG3Lsnv2.gG",
+    "age": 12,
+    "gender": "Male",
+    "healthGoals": ["Want to gain weight"],
+    "createdAt": "2025-03-08T13:32:01.201Z",
+    "updatedAt": "2025-03-08T13:33:00.664Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -269,5 +264,3 @@ DELETE /john@example.com
 ```
 
 ---
-
-

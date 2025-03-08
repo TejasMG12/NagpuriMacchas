@@ -13,16 +13,11 @@ interface IUserRegistration {
 }
 
 class AuthService {
-  
   async signUp(userData: IUserRegistration) {
     try {
       const { name, email, password, age, gender, contact } = userData;
-
-      
       const existingUser = await UserProfile.findOne({ email });
       if (existingUser) throw new Error("User already exists");
-
-      
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const userId = uuidv4();
@@ -37,8 +32,6 @@ class AuthService {
       });
 
       await newUser.save();
-
-      
       const token = jwt.sign({ userId: newUser._id, email: newUser.email }, process.env.JWT_SECRET as string, {
         expiresIn: "7d",
       });
@@ -49,7 +42,7 @@ class AuthService {
     }
   }
 
-  
+
   async signIn(email: string, password: string) {
     try {
       const user = await UserProfile.findOne({ email });
@@ -61,7 +54,6 @@ class AuthService {
       const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET as string, {
         expiresIn: "7d",
       });
-
       return { token, user };
     } catch (error) {
       throw new Error(`Login error: ${error.message}`);
