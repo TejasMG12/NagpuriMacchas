@@ -1,3 +1,6 @@
+import { Part } from '@google/generative-ai';
+import fs from 'fs/promises';
+import path from 'path';
 import { userSessions } from "../app";
 import { model, queryConfig } from "../handlers/gpt/gemini.service";
 import { Request, Response } from "express";
@@ -15,7 +18,7 @@ export const answer = async (req: Request, res: Response): Promise<void> => {
         userSessions[email] = model.startChat({
             history: [],
             generationConfig: queryConfig
-            
+
         });
     }
     try {
@@ -57,6 +60,49 @@ export const firsttime = async (req: Request, res: Response): Promise<void> => {
     }
     try {
         const result = await userSessions[email].sendMessage(message);
+        const reply = result.response.text();
+        res.json(JSON.parse(reply));
+    } catch (error) {
+        console.error("Error communicating with Gemini:", error);
+        res.status(500).json({ error: "Failed to process message" });
+    }
+}
+
+export const answerImage = async (req: Request, res: Response): Promise<void> => {
+    if (!req.file) {
+        res.status(400).json({ error: "No file uploaded" });
+        return;
+    }
+    const { email, message } = req.body;
+    if (!email || !message) {
+        res.status(400).json({ error: "User ID and message are required" });
+        return;
+    }
+    if (!userSessions[email]) {
+        userSessions[email] = model.startChat({
+            history: [],
+            generationConfig: queryConfig
+
+        });
+    }
+    try {
+        const imagePath = path.join(__dirname, '../..', 'uploads', req.file.filename); // Adjust path based on your file structure
+        console.log(imagePath);
+        const imageBuffer = await fs.readFile(imagePath);
+        const imageBase64 = imageBuffer.toString('base64');
+
+        const parts: Part[] = [
+            { text: message },
+            {
+                inlineData: {
+                    mimeType: req.file.mimetype,
+                    data: imageBase64,
+                },
+            },
+        ];
+
+        const result = await userSessions[email].sendMessage(parts);
+
         const reply = result.response.text();
         res.json(JSON.parse(reply));
     } catch (error) {
