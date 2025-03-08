@@ -6,6 +6,8 @@ import { ChatSession } from '@google/generative-ai';
 import mongoose from 'mongoose';
 import { configDotenv } from "dotenv";
 import { Request, Response } from 'express';
+import authRoutes from './routes/auth.routes';
+import profileRoutes from './routes/profile.routes';
 configDotenv();
 
 mongoose.connect(process.env.MONGO_URI)
@@ -43,6 +45,8 @@ app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 app.post('/doctor/firsttime', (req, res) => {
   const { userId, qtype } = req.body;
   console.log({ userId, qtype });
@@ -68,35 +72,27 @@ let ind = 0;
 const result = [
   {
     textMessage: ' Hello! How can I assist you today?',
-    question: {},
-    map: {}
   },
   {
-    textMessage: null,
     question: {
       type: "mcq",
       question: "Got it. Is your headache mild, moderate, or severe?",
       options: ["Mild", "Moderate", "Severe"]
     },
-    map: {}
   },
   {
-    textMessage: null,
     question: {
       type: "msq",
       question: "Thanks for sharing. Do you also have any of the following symptoms? (Select all that apply)",
       options: ["Nausea", "Dizziness", "Sensitivity to light/sound", "Fever", "None of these"]
-    },
-    map: {}
+    }
   },
   {
-    textMessage: null,
     question: {
       type: "mcq",
       question: "Understood. Have you been sleeping well and staying hydrated lately?",
       options: ["Yes, I've been drinking enough water and sleeping well.", "No, I haven't been drinking much water.", "No, my sleep schedule has been messed up.", "Both - I'm dehydrated and not sleeping well."]
-    },
-    map: {}
+    }
   },
   {
     textMessage: `That could be a major cause! Dehydration and lack of sleep often lead to headaches. Based on your symptoms, here are some suggestions:
@@ -114,13 +110,11 @@ If you experience severe dizziness, vision problems, or vomiting, visit a doctor
       type: "mcq",
       question: "Would you like to find nearby doctors or pharmacies?",
       options: ["Yes, show me doctors.", " No, I'll try the remedies first."]
-    },
-    map: {}
+    }
   },
   {
-    textMessage: "Great! I hope you feel better soon. I’ll send you a reminder to drink water in 30 minutes. Let me know if your symptoms change! 😊",
-    question: {},
-    map: {}
+    textMessage: "Great! I hope you feel better soon. I’ll send you a reminder to drink water in 30 minutes. Let me know if your symptoms change! 😊"
+
   },
 ];
 app.post('/doctor/answer', (req: Request, res: Response) => {
