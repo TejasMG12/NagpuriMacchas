@@ -40,10 +40,10 @@ _Replace VIDEO_ID with your YouTube video ID or provide an alternative demo link
 ## Technical Implementation
 
 ### Technologies Used
-- **Frontend**: [Technologies]
-- **Backend**: [Technologies]
-- **Database**: [Technologies]
-- **APIs**: [Technologies]
+- **Frontend**: Next.js, TailwindCSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **APIs**: OpenStreetMap (real-time location services for nearby doctors and pharmacies)
 - **DevOps**: [Technologies]
 - **Other Tools**: [Technologies]
 
