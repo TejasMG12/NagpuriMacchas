@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/button";
 import { SendHorizontal, Image, Mic } from "lucide-react";
@@ -8,27 +7,16 @@ import { SendHorizontal, Image, Mic } from "lucide-react";
 const USER_ID = "pk"; // Static for now, can be dynamic
 
 const ChatBox: React.FC = () => {
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Load messages from local storage on mount
-    const storedMessages = localStorage.getItem("chatMessages");
-    if (storedMessages) {
-      setMessages(JSON.parse(storedMessages));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Save messages to local storage whenever they update
-    localStorage.setItem("chatMessages", JSON.stringify(messages));
-  }, [messages]);
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+  // Function to send messages
+  const sendMessage = async (message: string) => {
+    if (!message.trim()) return;
 
     // Append user's message to state
-    const newMessages = [...messages, { sender: "user", text: input }];
+    const newMessages = [...messages, { sender: "user", text: message }];
     setMessages(newMessages);
     setInput("");
 
@@ -36,55 +24,117 @@ const ChatBox: React.FC = () => {
       const response = await fetch("http://localhost:5000/doctor/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: USER_ID, message: input }),
+        body: JSON.stringify({ userId: USER_ID, message }),
       });
 
       const data = await response.json();
-      if (data.response) {
-        setMessages((prev) => [...prev, { sender: "bot", text: data.response }]);
+      console.log("Backend Response:", data);
+
+      if (data.textMessage) {
+        setMessages((prev) => [...prev, { sender: "bot", text: data.textMessage }]);
+      }
+
+      if (data.question?.type) {
+        setMessages((prev) => [...prev, { sender: "bot", question: data.question }]);
       }
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
 
+  // Function to handle MCQ selection
+  const handleMcqSelection = (option: string) => {
+    sendMessage(option);
+  };
+
+  // Function to handle MSQ selection
+  const handleMsqSelection = (option: string) => {
+    setSelectedOptions((prev) =>
+      prev.includes(option) ? prev.filter((o) => o !== option) : [...prev, option]
+    );
+  };
+
+  // Function to submit MSQ answers
+  const submitMsq = () => {
+    if (selectedOptions.length > 0) {
+      sendMessage(selectedOptions.join(", "));
+      setSelectedOptions([]); // Reset selection
+    }
+  };
+
   return (
     <Layout>
-      <div style={styles.container}>
-        {/* Chat Card */}
-        <Card style={styles.chatCard}>
-          <CardContent style={styles.chatContent}>
-            {/* Chat messages */}
-            <div style={styles.chatMessages}>
-              {messages.map((msg, index) => (
-                <p key={index} style={msg.sender === "user" ? styles.userMessage : styles.botMessage}>
-                  {msg.text}
-                </p>
-              ))}
-            </div>
+      <div style={{width: "90%", 
+  margin: "auto", 
+//   display: "flex", 
+  flexDirection: "column", // Ensures components stack vertically
+  alignItems: "center", 
+  justifyContent: "space-between", // Pushes the input container to the bottom
+   }}>
+        {/* Chat messages */}
+        <div style={styles.chatMessages}>
+          {messages.map((msg, index) => (
+            <div key={index} style={msg.sender === "user" ? styles.userMessage : styles.botMessage}>
+              {/* Display plain text messages */}
+              {msg.text && <p>{msg.text}</p>}
 
-            {/* Input Area */}
-            <div style={styles.inputContainer}>
-              <Button variant="ghost" style={styles.iconButton}>
-                <Image size={20} />
-              </Button>
-              <Input
-                type="text"
-                placeholder="Type your message..."
-                style={styles.input}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              />
-              <Button variant="ghost" style={styles.iconButton}>
-                <Mic size={20} />
-              </Button>
-              <Button variant="ghost" style={styles.sendButton} onClick={sendMessage}>
-                <SendHorizontal size={20} />
-              </Button>
+              {/* Display MCQ question */}
+              {msg.question?.type === "mcq" && (
+                <div>
+                  <p>{msg.question.question}</p>
+                  {msg.question.options.map((option: string, i: number) => (
+                    <Button key={i} style={styles.optionButton} onClick={() => handleMcqSelection(option)}>
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              {/* Display MSQ question */}
+              {msg.question?.type === "msq" && (
+                <div>
+                  <p>{msg.question.question}</p>
+                  {msg.question.options.map((option: string, i: number) => (
+                    <Button
+                      key={i}
+                      style={{
+                        ...styles.optionButton,
+                        backgroundColor: selectedOptions.includes(option) ? "#90caf9" : "#e3f2fd",
+                      }}
+                      onClick={() => handleMsqSelection(option)}
+                    >
+                      {option}
+                    </Button>
+                  ))}
+                  <Button style={styles.submitButton} onClick={submitMsq}>
+                    Submit
+                  </Button>
+                </div>
+              )}
             </div>
-          </CardContent>
-        </Card>
+          ))}
+        </div>
+
+        {/* Input Area */}
+        <div style={styles.inputContainer}>
+          <Button variant="ghost" style={styles.iconButton}>
+            <Image size={20} />
+          </Button>
+          <Input
+            type="text"
+            placeholder="Type your message..."
+            style={styles.input}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+          />
+          <Button variant="ghost" style={styles.iconButton}>
+            <Mic size={20} />
+          </Button>
+          <Button variant="ghost" style={styles.sendButton} onClick={() => sendMessage(input)}>
+            <SendHorizontal size={20} />
+          </Button>
+        </div>
       </div>
     </Layout>
   );
@@ -93,35 +143,11 @@ const ChatBox: React.FC = () => {
 export default ChatBox;
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "90vh",
-    background: "#f8f9fa",
-  },
-  chatCard: {
-    width: "80%",
-    maxWidth: "100%",
-    height: "80vh",
-    borderRadius: "16px",
-    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "#ffffff",
-  },
-  chatContent: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    padding: "20px",
-  },
   chatMessages: {
     flex: 1,
     overflowY: "auto",
-    overflowX: "hidden", // Prevents horizontal scrollbar
-    paddingBottom: "20px",
+    overflowX: "hidden",
+    paddingBottom: "80px",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
@@ -129,52 +155,64 @@ const styles: { [key: string]: React.CSSProperties } = {
   userMessage: {
     alignSelf: "flex-end",
     backgroundColor: "#DCF8C6",
-    padding: "12px 16px",
+    padding: "5px 16px",
     borderRadius: "15px",
-    maxWidth: "60%", // Ensures messages do not get too wide
+    minWidth:"10%",
+    maxWidth: "60%",
     textAlign: "right",
     wordWrap: "break-word",
     overflowWrap: "break-word",
-    whiteSpace: "pre-wrap", // Ensures long messages wrap correctly
+    whiteSpace: "pre-wrap",
   },
   botMessage: {
     alignSelf: "flex-start",
     backgroundColor: "#EAEAEA",
     padding: "12px 16px",
     borderRadius: "15px",
-    maxWidth: "80%", // Prevents messages from stretching too wide
+    maxWidth: "60%",
     textAlign: "left",
     wordWrap: "break-word",
     overflowWrap: "break-word",
     whiteSpace: "pre-wrap",
   },
+  optionButton: {
+    borderRadius: "20px",
+    padding: "10px 15px",
+    margin: "5px",
+    cursor: "pointer",
+  },
+  submitButton: {
+    backgroundColor: "#b2dfdb",
+    borderRadius: "20px",
+    padding: "10px 15px",
+    margin: "10px 0",
+    cursor: "pointer",
+  },
   inputContainer: {
+    width:"80%",
     display: "flex",
     alignItems: "center",
     gap: "10px",
-    background: "#fff",
     padding: "14px",
     borderTop: "1px solid #ddd",
-    borderRadius: "0 0 16px 16px",
+    position: "fixed",  // Fixes it at the bottom
+    bottom: 0,  
+    backgroundColor:"#FFFCF8"
   },
   input: {
     flex: 1,
     borderRadius: "20px",
     padding: "10px",
     border: "1px solid #ddd",
-    fontSize: "14px",
-    outline: "none",
   },
   iconButton: {
     background: "transparent",
-    border: "none",
-    cursor: "pointer",
+    borderRadius: "50%",
+    padding: "10px",
   },
   sendButton: {
-    background: "transparent",
-    border: "none",
-    color: "black",
-    // borderRadius: "50%",
+    background: "#ffccbc",
+    borderRadius: "50%",
     padding: "10px",
   },
 };
