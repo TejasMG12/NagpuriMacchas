@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-// import AuthService from "../services/auth.
 import authService from "../handlers/user/auth.service";
 
 class AuthController {

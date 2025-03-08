@@ -23,7 +23,7 @@ class ProfileService {
     async updateUserProfile(email: string, updatedData: Partial<IUserProfile>): Promise<IUserProfile | null> {
         try {
             const userProfile = await UserProfile.findOne({ email }).select("-password"); // Exclude password
-            const updatedUser = await UserProfile.findByIdAndUpdate(userProfile.userId, updatedData, { new: true });
+            const updatedUser = await UserProfile.findByIdAndUpdate(userProfile._id, updatedData, { new: true });
             if (!updatedUser) {
                 throw new Error("User not found");
             }

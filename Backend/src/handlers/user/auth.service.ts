@@ -1,6 +1,7 @@
 import UserProfile from "../../models/profile.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid"; // Import UUID generator
 
 interface IUserRegistration {
   name: string;
@@ -24,8 +25,9 @@ class AuthService {
       
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      
+      const userId = uuidv4();
       const newUser = new UserProfile({
+        userId,
         name,
         email,
         password: hashedPassword,
@@ -53,7 +55,7 @@ class AuthService {
       const user = await UserProfile.findOne({ email });
       if (!user) throw new Error("User not found");
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = user.comparePassword(password);
       if (!isMatch) throw new Error("Invalid credentials");
 
       const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET as string, {

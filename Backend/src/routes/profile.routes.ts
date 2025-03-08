@@ -5,7 +5,7 @@ const router = Router();
 
 // Profile Routes (Protected)
 router.get("/:email", ProfileController.getProfile);
-router.put("/:email", ProfileController.updateProfile);
+router.post("/:email", ProfileController.updateProfile);
 router.delete("/:email", ProfileController.deleteProfile);
 
 export default router;
