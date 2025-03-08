@@ -6,31 +6,29 @@ The official template repository for Define 3.0
 
 
 
-# < Project Name >
+# SwasthyaAI
  Cover Image  If applicable
 
 ### Team Information
-- **Team Name**: <Team Name> 
-- **Track**: < Track >
+- **Team Name**: NagpuriMacchas 
+- **Track**: AI in Ayush
 
 ### Team Members
 | Name | Role | GitHub | LinkedIn |
 |------|------|--------|----------|
-| [Full Name] | [Role] | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
-| [Full Name] | [Role] | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
-| [Full Name] | [Role] | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
-| [Full Name] | [Role] | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
+|Tejas Gampawar |Backend and AI Integration  | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
+|Priyanshi Kumar |Backend and Frontend Integration  | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
+|Chetali Beniwal |UI/UX Design and Frontend Integration | [@username](https://github.com/username) | [Profile](https://linkedin.com/in/username) |
+
 
 ## Project Details
 
 ### Overview
-_A concise summary of your project (2-3 sentences)_
-
+SwasthyaAI, an AI-powered health platform that analyses symptoms and provides personalised AYUSH-based remedies, lifestyle suggestions, and medical guidance to promote natural and healthy living.
 ### Problem Statement
-_Describe the problem your project aims to solve_
-
+Many people rely excessively on pharmaceuticals, neglecting traditional and holistic healing methods. This over-dependence weakens the body's natural functions and leads to long-term medication use, especially among the elderly. There is a lack of AI-powered healthcare systems that integrate traditional medicine (AYUSH) with modern diagnostics to provide personalized, natural remedies while ensuring timely medical intervention. Our solution aims to bridge this gap by leveraging AI to recommend holistic treatments, promote preventive care, and align with SDG Goal 3: Good Health & Well-being.
 ### Solution
-_Explain your approach to solving the problem_
+Our AI-powered application analyzes symptoms, refines diagnoses through user inputs, and suggests natural remedies, diet, and lifestyle changes for mild conditions. It recommends medical consultation for severe cases, identifying the right specialist. With real-time location services, users can find nearby doctors, clinics, and pharmacies. A personalized health profile stores medical history, allergies, and conditions, providing tailored health advice.
 
 ### Demo
 [![Project Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
@@ -50,16 +48,18 @@ _Replace VIDEO_ID with your YouTube video ID or provide an alternative demo link
 - **Other Tools**: [Technologies]
 
 ### Key Features
-- Feature 1
-- Feature 2
-- Feature 3
+- AI-Powered Symptom Analysis – Identifies possible conditions based on user inputs.
+- Interactive Questioning – Asks follow-up questions for accurate diagnosis.
+- Natural Remedies & Lifestyle Advice – Suggests AYUSH-backed treatments for mild symptoms.
+- Doctor & Specialist Recommendation – Advises professional consultation for severe cases and finds nearby doctors, clinics, and pharmacies.
+- Personalized Health Profile – Stores medical history, allergies, and health conditions.
 
 ## Setup Instructions
 
 ### Prerequisites
-- Requirement 1
-- Requirement 2
-- Requirement 3
+- AI & Machine Learning Model – For symptom analysis and condition prediction.
+- Location API Integration – To fetch nearby healthcare services.
+- Frontend & Backend Development – To create an intuitive and scalable application.
 
 ### Installation 
 ```bash
