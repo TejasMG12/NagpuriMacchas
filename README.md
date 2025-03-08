@@ -57,6 +57,7 @@ _Replace VIDEO_ID with your YouTube video ID or provide an alternative demo link
 ## Setup Instructions
 
 ### Prerequisites
+- Medical Database – Includes symptoms, diseases, remedies, and treatments.
 - AI & Machine Learning Model – For symptom analysis and condition prediction.
 - Location API Integration – To fetch nearby healthcare services.
 - Frontend & Backend Development – To create an intuitive and scalable application.
@@ -80,7 +81,8 @@ _Brief overview of your development process and milestones_
 _Discuss technical challenges and how you overcame them_
 
 ### Future Enhancements
-_Share your vision for future development_
+- Our vision for future development is to transform this application into a comprehensive AI-driven healthcare companion that not only helps users diagnose symptoms but also promotes a holistic and preventive approach to well-being. A key focus will be on expanding the personalization aspect, where the system continuously learns from a user’s health history, lifestyle patterns, and feedback to offer dynamic, evolving health insights. Integrating wearable device data can further refine health tracking, allowing real-time monitoring and early warning systems for potential health risks.
+- Ultimately, the goal is to create a global, AI-powered ecosystem where users can seamlessly manage their health, receive personalized guidance, and access the right care at the right time, fostering a future where technology empowers individuals to lead healthier lives.
 
 ### References (if any)
 - [Reference 1](link)
