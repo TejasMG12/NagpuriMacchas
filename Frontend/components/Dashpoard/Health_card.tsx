@@ -20,7 +20,7 @@ const HealthCard: React.FC<HealthCardProps> = ({ title, value, unit, status, col
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#1e1e1e",
         color: "white",
-        width: "280px",
+        width: "300px",
         padding: "20px",
       }}
     >
