@@ -38,7 +38,7 @@ export const firsttime = async (req: Request, res: Response): Promise<void> => {
         return;
     }
     const userProfile = await profileService.getProfileByEmail(email);
-    console.log(userProfile);
+    // console.log(userProfile);
     if (userSessions[email]) {
         delete userSessions[email];
     }

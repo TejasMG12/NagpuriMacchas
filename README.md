@@ -17,7 +17,7 @@ The official template repository for Define 3.0
 | Name | Role | GitHub | LinkedIn |
 |------|------|--------|----------|
 |Tejas Gampawar |Backend and AI Integration  | [@TejasMG12](https://github.com/TejasMG12) | [Tejas Gampawar](https://www.linkedin.com/in/tejas-gampawar-463129258) |
-|Priyanshu Kumar |Backend and Frontend Integration  | [@priyanshu0463](https://github.com/priyanshu0463) | [Priyanshu Kumar](https://www.linkedin.com/in/priyanshukp0463/) |
+|Priyanshu Kumar |Backend and Frontend  | [@priyanshu0463](https://github.com/priyanshu0463) | [Priyanshu Kumar](https://www.linkedin.com/in/priyanshukp0463/) |
 |Chetali Beniwal |UI/UX Design and Frontend Integration | [@chetali-beniwal](https://github.com/chetali-beniwal) | [Chetali Beniwal](https://www.linkedin.com/in/chetali-beniwal/) |
 
 
