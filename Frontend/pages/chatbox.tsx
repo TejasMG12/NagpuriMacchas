@@ -1,22 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/button";
 import { SendHorizontal, Image, Mic } from "lucide-react";
+import { useRouter } from "next/router";
 
 const USER_ID = "pk"; // Static for now, can be dynamic
 
 const ChatBox: React.FC = () => {
+  const router = useRouter();
+  const { qtype } = router.query;
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [medicalCenters, setMedicalCenters] = useState<any[]>([]);
+  const [initialized, setInitialized] = useState(false);
 
-  // Function to send messages
+  useEffect(() => {
+    initializeFirstChat(qtype as string);
+}, [qtype]);
+
+const initializeFirstChat = async (qtype: string) => {
+  try {
+      const response = await fetch("http://localhost:5000/doctor/firsttime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: USER_ID, qtype: qtype }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        handleBotResponse(data);
+      }
+  } catch (error) {
+      console.error("Error initializing chat:", error);
+  }
+};
+
   const sendMessage = async (message: string) => {
     if (!message.trim()) return;
 
-    // Append user's message to state
     setMessages((prev) => [...prev, { sender: "user", text: message }]);
     setInput("");
 
@@ -24,34 +47,30 @@ const ChatBox: React.FC = () => {
       const response = await fetch("http://localhost:5000/doctor/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: USER_ID, message: message }),
+        body: JSON.stringify({ email: USER_ID, message }),
       });
-
+      
       const data = await response.json();
-      console.log("Backend Response:", data);
-
-      // Handle bot response
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: "bot",
-          text: data.textMessage,
-          question: data.question,
-          suggestedReplys: data.suggestedReplys || [],
-          map: data.map, // Add map field to the message
-        },
-      ]);
-
-      // If map field is present, fetch medical centers
-      if (data.map && data.map.query) {
-        fetchMedicalCenters(data.map.query);
-      }
+      handleBotResponse(data);
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
 
-  // Function to fetch medical centers
+  const handleBotResponse = (data: any) => {
+    setMessages((prev) => [...prev, {
+      sender: "bot",
+      text: data.textMessage,
+      question: data.question,
+      suggestedReplys: data.suggestedReplys || [],
+      map: data.map,
+    }]);
+    
+    if (data.map && data.map.query) {
+      fetchMedicalCenters(data.map.query);
+    }
+  };
+
   const fetchMedicalCenters = async (query: string) => {
     try {
       const response = await fetch("http://localhost:5000/api/scrape", {
