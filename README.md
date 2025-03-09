@@ -7,7 +7,8 @@ The official template repository for Define 3.0
 
 
 # SwasthyaAI
- ![SwasthyaAI 2025 Logo](https://github.com/TejasMG12/NagpuriMacchas/tree/main/Assets/logo.svg)
+ ![SwasthyaAI 2025 Logo](https://raw.githubusercontent.com/TejasMG12/NagpuriMacchas/main/Assets/logo.svg)
+
 
 ### Team Information
 - **Team Name**: NagpuriMacchas 
