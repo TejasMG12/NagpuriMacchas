@@ -16,9 +16,9 @@ This backend provides APIs for user authentication, profile management, and AI-b
 
 ```json
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "securepassword",
+  "name": "Tejas gampawar",
+  "email": "tejas@gmail.com",
+  "password": "Password",
   "location": "Manewada, Nagpur",
   "age": 25,
   "gender": "Male"
