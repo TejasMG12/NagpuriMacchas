@@ -30,7 +30,6 @@ const Sidebar: React.FC<SidebarProps> = ({ theme }) => {
         { name: 'Appointments', href: '/appointments', icon: CalendarCheck },
         { name: 'Health Metrics', href: '/health-metrics', icon: HeartPulse },
         { name: 'Consult', href: '/chatbox', icon: MessageCircle },
-        { name: 'Settings', href: '', icon: Settings },
         { name: 'Logout', href: '', icon: LogOut },
     ];
 

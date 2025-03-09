@@ -22,13 +22,13 @@ const HealthSuggestions: React.FC = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" style={styles.dropdownButton}>
-              Jan 2025 <ChevronDown size={16} />
+              Mar 2025 <ChevronDown size={16} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Jan 2025</DropdownMenuItem>
-            <DropdownMenuItem>Feb 2025</DropdownMenuItem>
             <DropdownMenuItem>Mar 2025</DropdownMenuItem>
+            <DropdownMenuItem>Feb 2025</DropdownMenuItem>
+            <DropdownMenuItem>Jan 2025</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -39,7 +39,7 @@ const HealthSuggestions: React.FC = () => {
           <div key={index} style={styles.suggestionItem}>
             <span style={styles.icon}>{item.icon}</span>
             <div>
-              <h3 style={styles.suggestionTitle}>{item.title}</h3>
+              <p style={styles.suggestionTitle}>{item.title}</p>
               <p style={styles.suggestionDescription}>{item.description}</p>
             </div>
           </div>
@@ -102,6 +102,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     suggestionTitle: {
       fontSize: "16px",
       fontWeight: "600",
+      color:"black"
     },
     suggestionDescription: {
       fontSize: "14px",

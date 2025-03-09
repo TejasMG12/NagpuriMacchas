@@ -22,7 +22,7 @@ const Home: React.FC = () => {
 
     return (
         <Layout>
-            <div style={{ display: "flex", gap: "140px", padding: "20px" }}>
+            <div style={{ display: "flex", gap: "50px", padding: "10px" }}>
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
                     <div style={{ display: "flex", gap: "15px", justifyContent: "center", padding: "20px" }}>
                         <HealthCard title="Blood Sugar" value="80" unit="mg/dL" status="Normal" color="#F4A261" icon={<Droplets />} data={sugarData} />
@@ -76,8 +76,9 @@ const sectionStyle: React.CSSProperties = {
     boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
     padding: "40px",
     textAlign: "center",
-    maxWidth: "500px",
-    height: "800px",
+    // maxWidth: "500px",
+    width:"100%",
+    height: "780px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
@@ -86,9 +87,10 @@ const sectionStyle: React.CSSProperties = {
 };
 
 const infoBoxContainer: React.CSSProperties = {
+  marginTop:"40px",
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
+    gap: "30px",
 };
 
 const infoBoxStyle: React.CSSProperties = {
