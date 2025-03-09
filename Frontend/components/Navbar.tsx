@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   const router = useRouter();
   
   // Set navbar width based on route
-  const navbarWidth = router.pathname === "/" ? "60%" : "98%";
+  const navbarWidth = "98%";
 
   return (
     <div
@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           <Moon size={24} color="black" />
         )}
       </button>
-
+      <img src="logo.svg" alt="SwasthyaAI" width="300" style={{marginTop:"20px"}}/>
       {/* Right Side - Search & Notification Icons */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         {/* Expanding Search Box */}
