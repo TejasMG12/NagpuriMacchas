@@ -50,12 +50,12 @@ const Sidebar: React.FC<SidebarProps> = ({ theme }) => {
         >
             {/* Logo Section */}
             <Link href="/">
-                <div style={{ width: '50px', height: '50px', marginBottom: '20px' }}>
+                <div style={{ width: '75px', height: '75px'}}>
                     <Image 
-                        src="/logo-main.png" 
+                        src="/Logo2.png" 
                         alt="App Logo" 
-                        width={50} 
-                        height={50} 
+                        width={75} 
+                        height={75} 
                     />
                 </div>
             </Link>
