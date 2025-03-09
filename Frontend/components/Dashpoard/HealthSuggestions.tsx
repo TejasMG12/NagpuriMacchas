@@ -13,7 +13,7 @@ const healthSuggestions = [
 
 const HealthSuggestions: React.FC = () => {
   return (
-    <div style={styles.container}>
+    <div >
       {/* Header */}
       <div style={styles.header}>
         <h2 style={styles.title}>Daily Health Suggestions</h2>
@@ -22,13 +22,13 @@ const HealthSuggestions: React.FC = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" style={styles.dropdownButton}>
-              Jan 2021 <ChevronDown size={16} />
+              Jan 2025 <ChevronDown size={16} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Jan 2021</DropdownMenuItem>
-            <DropdownMenuItem>Feb 2021</DropdownMenuItem>
-            <DropdownMenuItem>Mar 2021</DropdownMenuItem>
+            <DropdownMenuItem>Jan 2025</DropdownMenuItem>
+            <DropdownMenuItem>Feb 2025</DropdownMenuItem>
+            <DropdownMenuItem>Mar 2025</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -52,53 +52,59 @@ const HealthSuggestions: React.FC = () => {
 export default HealthSuggestions;
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    width: "100%", // Full width
-    backgroundColor: "#ffffff",
-    padding: "16px",
-    borderRadius: "16px",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: "18px",
-    fontWeight: "600",
-  },
-  dropdownButton: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "6px 12px",
-    border: "1px solid #ddd",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-  suggestionsList: {
-    marginTop: "16px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  suggestionItem: {
-    display: "flex",
-    alignItems: "start",
-    gap: "12px",
-    padding: "12px",
-    backgroundColor: "#f8f9fa",
-    borderRadius: "8px",
-  },
-  icon: {
-    fontSize: "24px",
-  },
-  suggestionTitle: {
-    fontSize: "16px",
-    fontWeight: "600",
-  },
-  suggestionDescription: {
-    fontSize: "14px",
-    color: "#555",
-  },
-};
+    container: {
+      width: "90%", // Full width
+      backgroundColor: "#ffffff",
+      padding: "16px",
+      borderRadius: "16px",
+    },
+    header: {
+      width: "90%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    title: {
+      fontSize: "18px",
+      fontWeight: "600",
+    },
+    dropdownButton: {
+      display: "flex",
+      alignItems: "center",
+      gap: "5px",
+      padding: "6px 12px",
+      border: "1px solid #ddd",
+      borderRadius: "6px",
+      cursor: "pointer",
+    },
+    suggestionsList: {
+      marginTop: "16px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "12px",
+    },
+    suggestionItem: {
+      display: "flex",
+      alignItems: "center", // Ensures vertical centering
+      gap: "12px",
+      padding: "12px",
+      backgroundColor: "#f8f9fa",
+      borderRadius: "8px",
+    },
+    icon: {
+      fontSize: "24px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "32px", // Ensures uniform size
+      minHeight: "32px",
+    },
+    suggestionTitle: {
+      fontSize: "16px",
+      fontWeight: "600",
+    },
+    suggestionDescription: {
+      fontSize: "14px",
+      color: "#555",
+    },
+  };
