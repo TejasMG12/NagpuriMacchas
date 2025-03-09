@@ -40,11 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           justifyContent: "center",
         }}
       >
-        {theme === "dark" ? (
-          <Sun size={24} color="white" />
-        ) : (
-          <Moon size={24} color="black" />
-        )}
+        
       </button>
       <img src="logo.svg" alt="SwasthyaAI" width="300" style={{marginTop:"20px"}}/>
       {/* Right Side - Search & Notification Icons */}
