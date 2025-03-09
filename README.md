@@ -30,12 +30,7 @@ Many people rely excessively on pharmaceuticals, neglecting traditional and holi
 ### Solution
 SwasthyaAI analyzes symptoms, refines diagnoses through user inputs, and suggests natural remedies, diet, and lifestyle changes for mild conditions. It recommends medical consultation for severe cases, identifying the right specialist. With real-time location services, users can find nearby doctors, clinics, and pharmacies. A personalized health profile stores medical history, allergies, and conditions, providing tailored health advice.
 
-### Demo
-[![Project Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
-_Replace VIDEO_ID with your YouTube video ID or provide an alternative demo link_
 
-### Live Project
-[Project Name](https://your-project-url.com)
 
 ## Technical Implementation
 
