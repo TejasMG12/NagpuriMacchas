@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/button";
 import { SendHorizontal, Image, Mic } from "lucide-react";
 import { useRouter } from "next/router";
+import { useDropzone } from "react-dropzone";
 
 const USER_ID = "pk"; // Static for now, can be dynamic
 
@@ -15,6 +16,9 @@ const ChatBox: React.FC = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [medicalCenters, setMedicalCenters] = useState<any[]>([]);
   const [initialized, setInitialized] = useState(false);
+  const [image, setImage] = useState<File | null>(null);
+  const [isDropzoneOpen, setIsDropzoneOpen] = useState(false);
+  
 
   useEffect(() => {
     initializeFirstChat(qtype as string);
@@ -37,12 +41,33 @@ const initializeFirstChat = async (qtype: string) => {
   }
 };
 
-  const sendMessage = async (message: string) => {
-    if (!message.trim()) return;
-
+const sendMessage = async (message: string) => {
+  if (!message.trim() && !image) return;
+  
+  if (image) {
+    setMessages((prev) => [...prev, { sender: "user", text: message, image: URL.createObjectURL(image) }]);
+    setInput("");
+    setImage(null);
+    
+    const formData = new FormData();
+    formData.append("email", USER_ID);
+    formData.append("message", message);
+    formData.append("image", image);
+    
+    try {
+      const response = await fetch("http://localhost:5000/doctor/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      handleBotResponse(data);
+    } catch (error) {
+      console.error("Error sending message with image:", error);
+    }
+  } else {
     setMessages((prev) => [...prev, { sender: "user", text: message }]);
     setInput("");
-
+    
     try {
       const response = await fetch("http://localhost:5000/doctor/answer", {
         method: "POST",
@@ -55,7 +80,9 @@ const initializeFirstChat = async (qtype: string) => {
     } catch (error) {
       console.error("Error sending message:", error);
     }
-  };
+  }
+};
+
 
   const handleBotResponse = (data: any) => {
     setMessages((prev) => [...prev, {
@@ -64,6 +91,7 @@ const initializeFirstChat = async (qtype: string) => {
       question: data.question,
       suggestedReplys: data.suggestedReplys || [],
       map: data.map,
+      image: data.imageUrl
     }]);
     
     if (data.map && data.map.query) {
@@ -106,6 +134,16 @@ const initializeFirstChat = async (qtype: string) => {
     }
   };
 
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "image/*",
+    onDrop: (acceptedFiles) => {
+      if (acceptedFiles.length > 0) {
+        setImage(acceptedFiles[0]);
+        setIsDropzoneOpen(false);
+      }
+    },
+  });
+
   return (
     <Layout>
       <div style={styles.chatContainer}>
@@ -114,6 +152,7 @@ const initializeFirstChat = async (qtype: string) => {
           {messages.map((msg, index) => (
             <div key={index} style={msg.sender === "user" ? styles.userMessage : styles.botMessage}>
               {/* Display plain text messages */}
+              {msg.image && <img src={msg.image} alt="Uploaded" style={{ width: "400px", borderRadius: "8px" }} />}
               {msg.text && <p>{msg.text}</p>}
 
               {/* Display Text Type Question */}
@@ -194,7 +233,7 @@ const initializeFirstChat = async (qtype: string) => {
 
         {/* Input Area */}
         <div style={styles.inputContainer}>
-          <Button variant="ghost" style={styles.iconButton}>
+        <Button variant="ghost" style={styles.iconButton} onClick={() => setIsDropzoneOpen(true)}>
             <Image size={20} />
           </Button>
           <Input
@@ -212,6 +251,12 @@ const initializeFirstChat = async (qtype: string) => {
             <SendHorizontal size={20} />
           </Button>
         </div>
+        {isDropzoneOpen && (
+          <div {...getRootProps()} style={{ border: "2px dashed #ccc", padding: "20px", marginTop: "10px", textAlign: "center" }}>
+            <input {...getInputProps()} />
+            <p>Drag & drop an image here, or click to select one</p>
+          </div>
+        )}
       </div>
     </Layout>
   );
